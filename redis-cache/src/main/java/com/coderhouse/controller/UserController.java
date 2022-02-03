@@ -15,7 +15,8 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("user/login")
-    public User login(@RequestParam("user") String username, @RequestParam("password") String pwd) throws Exception {
+    public User login(@RequestParam("user") String username,
+                      @RequestParam("password") String pwd) throws Exception {
         return service.getUser(username, pwd);
     }
 

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,11 +18,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableAutoConfiguration(exclude = {org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration.class})
 public class RedisConfiguration {
 
-    private final ApplicationProperties redisProperties;
+    private final ApplicationProperties properties;
 
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
-        var config = new RedisStandaloneConfiguration(redisProperties.getHost(), redisProperties.getPort());
+        var config = new RedisStandaloneConfiguration(properties.getHost(), properties.getPort());
         return new JedisConnectionFactory(config);
     }
 

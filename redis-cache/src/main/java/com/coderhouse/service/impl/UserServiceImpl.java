@@ -31,6 +31,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(User user) {
         //Validar password
+        //Encriptar
+        //Validar que no exista el usuario
         return repository.save(user);
     }
 }

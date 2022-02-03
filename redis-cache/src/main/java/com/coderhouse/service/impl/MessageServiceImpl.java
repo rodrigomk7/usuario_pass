@@ -3,6 +3,7 @@ package com.coderhouse.service.impl;
 import com.coderhouse.cache.CacheClient;
 import com.coderhouse.handle.ApiRestException;
 import com.coderhouse.model.Message;
+import com.coderhouse.model.User;
 import com.coderhouse.repository.MessageRepository;
 import com.coderhouse.service.MessageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -50,7 +51,8 @@ public class MessageServiceImpl implements MessageService {
             if (!Objects.isNull(dataFromCache)) {
                 return dataFromCache;
             }
-            var dataFromDatabase = repository.findById(id).orElseThrow(ApiRestException::new);
+            var dataFromDatabase = repository.findById(id)
+                    .orElseThrow(ApiRestException::new);
             return saveMessageInCache(dataFromDatabase);
         } catch (JsonProcessingException e) {
             log.error("Error converting message to string", e);

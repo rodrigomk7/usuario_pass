@@ -2,6 +2,7 @@ package com.coderhouse.Utils;
 
 public class Constants {
 
+    //Redis
     public static final String NAME_MAP_MESSAGE = "mensaje-map";
     //Security
     public static final String ROLE = "ROLE_USER";
