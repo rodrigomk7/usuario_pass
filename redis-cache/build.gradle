@@ -8,34 +8,46 @@ group = 'com.coderhouse'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-ext {
-	set('springCloudVersion', "2021.0.0")
-}
-
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
 }
 
+configurations.all {
+	exclude module: 'spring-boot-starter-logging'
+}
+
 repositories {
 	mavenCentral()
 }
 
+ext {
+	set('springCloudVersion', "2021.0.0")
+}
+
+
 dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.cloud:spring-cloud-starter-config'
-	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+	implementation "org.springframework.boot:spring-boot-starter-log4j2"
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'redis.clients:jedis'
 
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+
+	implementation 'redis.clients:jedis'
 	runtimeOnly 'com.h2database:h2'
+
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.2'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 dependencyManagement {

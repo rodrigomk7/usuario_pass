@@ -4,4 +4,5 @@ import com.coderhouse.model.User;
 
 public interface UserService {
     User getUser(String username, String pwd) throws Exception;
+    User register(User user) throws Exception;
 }

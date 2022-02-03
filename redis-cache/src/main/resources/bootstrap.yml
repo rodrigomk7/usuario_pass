@@ -1,6 +1,6 @@
 spring:
   application:
-    name: message-v1
+    name: message-v2
   cloud:
     config:
       uri: http://localhost:8888

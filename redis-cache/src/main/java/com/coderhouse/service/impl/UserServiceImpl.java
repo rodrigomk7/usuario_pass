@@ -3,23 +3,34 @@ package com.coderhouse.service.impl;
 import com.coderhouse.handle.ApiRestException;
 import com.coderhouse.model.User;
 import com.coderhouse.repository.UserRepository;
+import com.coderhouse.security.JwtProvider;
 import com.coderhouse.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
+    private final JwtProvider jwtProvider;
 
     @Override
     public User getUser(String username, String pwd) throws ApiRestException {
         var user = repository.findUserByUsername(username);
 
-        if (!(user.getUsername().equals(username) && user.getPassword().equals(pwd))) {
+        if (Objects.isNull(user) || !(user.getUsername().equals(username) && user.getPassword().equals(pwd))) {
             throw ApiRestException.builder().message("El usuario o el password es inválido").build();
         }
-        return User.builder().username(username).build();
+        var token = jwtProvider.getJWTToken(username);
+        return User.builder().username(username).token(token).build();
+    }
+
+    @Override
+    public User register(User user) {
+        //Validar password
+        return repository.save(user);
     }
 }

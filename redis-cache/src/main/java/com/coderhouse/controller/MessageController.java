@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Slf4j
 @RestController
 @RequestMapping("/coder-house")
@@ -15,9 +17,12 @@ public class MessageController {
     private final MessageService service;
 
     @GetMapping("/mensajes/{id}")
-    public Message getMensajeById(@PathVariable Long id) {
+    public Message getMensajeById(@PathVariable Long id, HttpSession session) {
         log.info("GET obtener mensaje por el id");
-        return service.getMessageById(id);
+        var response = service.getMessageById(id);
+        session.setAttribute("id", id);
+        session.setAttribute("response: ", response);
+        return response;
     }
 
     @PostMapping("/mensajes")
