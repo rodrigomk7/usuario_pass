@@ -50,7 +50,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private void setUpSpringAuthentication(Claims claims) {
         var authorities = (List<String>) claims.get(Constants.AUTHORITIES);
 
-        var auth = new UsernamePasswordAuthenticationToken(claims.getSubject(),null,
+        var auth = new UsernamePasswordAuthenticationToken(claims.getSubject(), null,
                 authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
 
         SecurityContextHolder.getContext().setAuthentication(auth);

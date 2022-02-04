@@ -1,25 +1,22 @@
-package com.coderhouse.model;
+package com.coderhouse.model.document;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
-
-@Entity
-@Getter
 @Setter
+@Getter
 @Builder
-@AllArgsConstructor(staticName = "of")
+@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
+@Document("user")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
     private String username;
     private String password;
     private String email;
-    private String token;
 }

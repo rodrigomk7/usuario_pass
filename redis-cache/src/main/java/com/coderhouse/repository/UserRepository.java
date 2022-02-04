@@ -1,12 +1,11 @@
 package com.coderhouse.repository;
 
-import com.coderhouse.model.User;
-import org.springframework.data.repository.CrudRepository;
+import com.coderhouse.model.document.User;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
-
+public interface UserRepository extends MongoRepository<User, String> {
     User findUserByUsername(String username);
-
+    User findUserByEmail(String username);
 }

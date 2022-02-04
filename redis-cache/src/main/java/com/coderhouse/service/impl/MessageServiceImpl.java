@@ -2,8 +2,7 @@ package com.coderhouse.service.impl;
 
 import com.coderhouse.cache.CacheClient;
 import com.coderhouse.handle.ApiRestException;
-import com.coderhouse.model.Message;
-import com.coderhouse.model.User;
+import com.coderhouse.model.document.Message;
 import com.coderhouse.repository.MessageRepository;
 import com.coderhouse.service.MessageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,10 +10,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Slf4j
 @Service
@@ -37,17 +35,13 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public List<Message> findAll() {
-        return StreamSupport.stream(repository.findAll().spliterator(),
-                false).collect(Collectors.toList());
+        return new ArrayList<>(repository.findAll());
     }
 
     @Override
-    public Message getMessageById(Long id) {
+    public Message getMessageById(String id) {
         try {
-            if (id == 0) {
-                throw ApiRestException.builder().message("El identificador del mensaje debe ser mayor a 0").build();
-            }
-            var dataFromCache = cache.recover(id.toString(), Message.class);
+            var dataFromCache = cache.recover(id, Message.class);
             if (!Objects.isNull(dataFromCache)) {
                 return dataFromCache;
             }
@@ -63,7 +57,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     private Message saveMessageInCache(Message message) throws JsonProcessingException {
-        return cache.save(message.getId().toString(), message);
+        return cache.save(message.getId(), message);
     }
 
 }

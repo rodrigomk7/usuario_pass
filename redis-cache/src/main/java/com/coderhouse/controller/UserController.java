@@ -1,6 +1,8 @@
 package com.coderhouse.controller;
 
-import com.coderhouse.model.User;
+import com.coderhouse.model.document.User;
+import com.coderhouse.model.request.UserRequest;
+import com.coderhouse.model.response.UserResponse;
 import com.coderhouse.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,14 +17,13 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("user/login")
-    public User login(@RequestParam("user") String username,
-                      @RequestParam("password") String pwd) throws Exception {
-        return service.getUser(username, pwd);
+    public UserResponse login(@RequestBody UserRequest request) throws Exception {
+        return service.getUser(request);
     }
 
     @PostMapping("user/register")
-    public User register(@RequestBody User user) throws Exception {
-        return service.register(user);
+    public UserResponse register(@RequestBody UserRequest request) throws Exception {
+        return service.register(request);
     }
 
 }
